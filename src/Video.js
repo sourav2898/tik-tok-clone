@@ -2,6 +2,7 @@ import React, {useRef,useState}from 'react'
 import './Video.css';
 import VideoFooter from './VideoFooter';
 import VideoSideBar from './VideoSideBar';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 
 const Video = ({likes, shares, description, messages, channel , song, url}) => {
 
@@ -19,17 +20,26 @@ const Video = ({likes, shares, description, messages, channel , song, url}) => {
     }
     return (
         <div className="video">
+            <div className="playButton">
+            {
+                !playing 
+                ?
+                <PlayCircleOutlineIcon style={{fontSize : "100px", color: "#fff"}} />
+                : 
+                null
+            }
+            </div>
             <video
-             className="video_player"
-             loop
-             onClick = {videoPlay}
-             ref={videoRef}
-             src={url}
+                className="video_player"
+                loop
+                onClick = {videoPlay}
+                ref={videoRef}
+                src={url}
             ></video>
             <VideoFooter
-             channel = {channel}
-             song = {song}
-             description = {description}
+                channel = {channel}
+                song = {song}
+                description = {description}
              />
              <VideoSideBar 
                  likes = {likes}
