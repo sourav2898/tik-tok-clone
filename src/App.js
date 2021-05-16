@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect,useRef} from 'react';
 import './App.css';
 import Video from './Video.js';
 import db from './firebase';
@@ -8,7 +8,8 @@ function App() {
 
   const [videos, setVideos] = useState([]);
   const [loading,isLoading] = useState(true);
-
+  const [scrolled,setScrolled] = useState(false);
+  const ref = useRef();
   useEffect(() => {
     db.collection('videos').onSnapshot( snapshot => {
       console.log(snapshot.docs)
@@ -17,11 +18,15 @@ function App() {
     })
   },[])
 
+  const onScroll = () => {
+    setScrolled(true);
+  }
+
   return (
     <div className="app">
       {
         loading ? <CircularProgress /> :
-        <div className="app_videos">
+        <div className="app_videos" ref={ref} onScroll={onScroll}>
         {
           videos.map(({likes, shares, description, messages, channel , song, url}, index) => {
             return <Video 
@@ -33,6 +38,8 @@ function App() {
                       channel = {channel}
                       song = {song}
                       description = {description}
+                      scrolled={scrolled}
+                      setScrolled={setScrolled}
                     />
           })
         }
