@@ -3,6 +3,7 @@
     background-color: #fff;
     margin: 10px;
     height: 100%;
+    right: 10px;
     width: 100%;
     scroll-snap-align: start;
 }
